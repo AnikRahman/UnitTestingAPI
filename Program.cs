@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using UnitTestingAPI.Context;
+using UnitTestingAPI.Repository;
+using UnitTestingAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 	builder.Configuration.GetConnectionString("DefaultConnection")
 
 	));
+
+builder.Services.AddScoped<IAlicoClaimsRepository, AlicoClaimsRepository>(); 
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IAlicoClaimsService, AlicoClaimsService>();
 
 var app = builder.Build();
 
